@@ -9,16 +9,16 @@ services:
       - "8080:8080"
     environment:
       - NODE_ENV=development
-      - RIOT_KEY=${RIOT_KEY}
+      - CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN}
 
   # racing interface
-  willow_tech:
+  willow:
     build: ./interface  
-    container_name: interface
+    container_name: racing-interface
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=development
+      - API_HOST=${API_HOST}
     depends_on:
       - api
 
