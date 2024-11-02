@@ -20,15 +20,12 @@ fi
 
 WORKDIR=$(pwd)
 
-if [ -z "${API_REPO}" ] || [ -z "${INTERFACE_REPO}" ] ||; then
+if [ -z "${API_REPO}" ] || [ -z "${INTERFACE_REPO}" ]; then
   echo "Error: Please define all the variables"
   exit 1
 fi
 
 ./clone.sh
-
-echo "Building projects..."
-
 
 echo "Starting services with docker-compose up..."
 docker-compose --env-file .env up -d --build
