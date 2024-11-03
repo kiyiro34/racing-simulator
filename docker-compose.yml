@@ -12,7 +12,7 @@ services:
       - CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN}
 
   # racing interface
-  willow:
+  interface:
     build: ./interface  
     container_name: racing-interface
     ports:

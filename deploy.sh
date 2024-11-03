@@ -12,7 +12,7 @@ stop_and_clean() {
 }
 trap 'stop_and_clean' SIGINT
 
-$if [ -f ".env" ]; then
+if [ -f ".env" ]; then
   echo "Loading environment variables from .env file..." | tee -a "$LOGFILE"
   set -o allexport
   source .env
