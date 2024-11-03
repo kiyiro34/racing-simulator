@@ -2,16 +2,21 @@
 
 LOGFILE="deploy.log"
 
+# Fonction de nettoyage
 stop_and_clean() {
   echo -e "\nStopping services and cleaning up..." | tee -a "$LOGFILE"
   
+  # Stop docker-compose services
   docker-compose down >> "$LOGFILE" 2>&1
-
+  
   echo "Cleanup done. All services stopped." | tee -a "$LOGFILE"
   exit 0
 }
 
-# We load the env file
+# Active le trap dès le début pour intercepter CTRL+C
+trap 'stop_and_clean' SIGINT
+
+# Charger les variables d'environnement
 if [ -f ".env" ]; then
   echo "Loading environment variables from .env file..." | tee -a "$LOGFILE"
   set -o allexport
@@ -22,8 +27,7 @@ else
   exit 1
 fi
 
-WORKDIR=$(pwd)
-
+# Vérification des variables
 if [ -z "${API_REPO}" ] || [ -z "${INTERFACE_REPO}" ]; then
   echo "Error: Please define all the variables" | tee -a "$LOGFILE"
   exit 1
@@ -36,29 +40,17 @@ if [ $? -ne 0 ]; then
   stop_and_clean
 fi
 
+# Lancer les services en mode attaché (sans -d) pour garder le contrôle
 echo "Starting services with docker-compose up..." | tee -a "$LOGFILE"
-docker-compose --env-file .env up -d --build >> "$LOGFILE" 2>&1
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to start services with docker-compose." | tee -a "$LOGFILE"
-  stop_and_clean
-fi
+docker-compose --env-file .env up --build | tee -a "$LOGFILE" &
 
-echo "Checking if all services are running..." | tee -a "$LOGFILE"
-sleep 10
+# Attendre que docker-compose s'exécute et capturer son PID
+COMPOSE_PID=$!
 
-containers=$(docker ps --filter "status=running" --format "{{.Names}}: {{.Status}}")
-if [ -z "$containers" ]; then
-  echo "Error: No containers are running. Please check the logs for issues." | tee -a "$LOGFILE"
-  stop_and_clean
-else
-  echo "All services are running:" | tee -a "$LOGFILE"
-  echo "$containers" | tee -a "$LOGFILE"
-fi
-
-echo "Deployment is running. Press CTRL+C to stop the services." | tee -a "$LOGFILE"
-
-trap 'stop_and_clean' SIGINT
-
-while true; do
+# Boucle pour maintenir le script actif et capturer les signaux
+while kill -0 $COMPOSE_PID 2> /dev/null; do
   sleep 1
 done
+
+# Nettoyage final si docker-compose se termine
+stop_and_clean
