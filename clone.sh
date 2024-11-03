@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if [ -f ".env" ]; then
   echo "Loading environment variables from .env file..."
   set -o allexport
