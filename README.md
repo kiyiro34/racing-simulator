@@ -17,7 +17,7 @@ Then, run the docker compose with the command :
 docker-compose --env-file .env up --build 
 ```
 
-Then go the url to use the simulator
+Finally, go to your localhost on the chosen port to use the simulator : 
 
 ```text
 http://localhost:INTERFACE_PORT
