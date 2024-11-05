@@ -1,8 +1,8 @@
 # racing-simulator
 
+The racing-simulator project enables users to simulate drone races on a given circuit. It consists of a Spring Boot REST API, a Spring Boot WebSocket for real-time communication, and a user interface powered by a Node.js server.
 
-
-## Getting started
+## How to run
 
 Create a .env file directly at the project root like this one, to expose the 2 ports to use for the components: 
 
