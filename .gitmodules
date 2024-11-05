@@ -1,4 +1,6 @@
 [submodule "racing-interface"]
 	path = racing-interface
+	url = git@gitlab.com:kiyiro34/racing-interface.git
 [submodule "racing-api"]
 	path = racing-api
+	url = git@gitlab.com:kiyiro34/racing-library.git
