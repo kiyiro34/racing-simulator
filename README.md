@@ -10,8 +10,7 @@ To clone the project with all its submodules easily, run the git command :
  git clone --recurse-submodules git@github.com:kiyiro34/racing-simulator.git
  ```
 
- If you encounter any error while cloning submodules, you can clone them separatly in the the new project folder.
- Use the differents modules url and name in the `.gitmodules` file, to clone them in the project with the correct folder name.
+ If you encounter any errors while cloning submodules, you can clone them separately in the new project folder. Use the different module URLs and names in the `.gitmodules` file to clone them into the project with the correct folder names.
 
 ## How to run
 
