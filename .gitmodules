@@ -1,6 +1,6 @@
 [submodule "racing-interface"]
 	path = racing-interface
-	url = https://github.com/kiyiro34/racing-interface.git
+	url = git@github.com:kiyiro34/racing-interface.git
 [submodule "racing-api"]
 	path = racing-api
-	url = https://github.com/kiyiro34/racing-api.git
+	url = git@github.com:kiyiro34/racing-api.git
